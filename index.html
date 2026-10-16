@@ -82,7 +82,7 @@ input[type=range]{flex:1;accent-color:var(--rose);min-width:0}
 .viewport{overflow:hidden;border-radius:22px;border:1px solid var(--line);touch-action:pan-y}
 .track{display:flex;transition:transform .6s cubic-bezier(.65,0,.25,1)}
 .slide{flex:0 0 100%;margin:0}
-.ph{position:relative;aspect-ratio:4/3;display:grid;place-items:center;text-align:center;background:linear-gradient(135deg,var(--bg2),color-mix(in srgb,var(--rose) 25%,var(--bg)));cursor:pointer;overflow:hidden}
+.ph{cursor:default;position:relative;aspect-ratio:4/3;display:grid;place-items:center;text-align:center;background:linear-gradient(135deg,var(--bg2),color-mix(in srgb,var(--rose) 25%,var(--bg)));cursor:pointer;overflow:hidden}
 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .ph .hint{padding:1rem;color:var(--muted)}
 .ph .hint b{display:block;font-size:2.6rem;color:var(--rose);font-weight:400}
@@ -156,7 +156,7 @@ footer{text-align:center;color:var(--muted);padding:2rem 0 1rem;font-style:itali
       <button class="nav next" aria-label="Photo suivante">›</button>
       <div class="dots" id="dots"></div>
     </div>
-    <p class="tip">Touche un cadre pour ajouter une photo ou une vidéo. Touche la légende pour la modifier.</p>  
+    <p class="tip">Touche une légende pour la modifier.</p>
   </section>
 
   <section>
@@ -165,10 +165,10 @@ footer{text-align:center;color:var(--muted);padding:2rem 0 1rem;font-style:itali
       <div class="body" contenteditable="true" spellcheck="true" aria-label="Lettre d'excuses (modifiable)">
         <p>Ma petite princesse Daana,</p>
         <p>Je ne sais pas par où commencer, alors je commence par l'essentiel : je suis désolé. Je n'aurais jamais dû te faire de la peine, et je mesure à quel point je t'ai blessée.</p>
-        <p> je ne suis plus moi même depuis notre dispute.</p>
-        <p>Tu comptes plus que mon orgueil d'homme, plus que n'importe quelle dispute. Je vais mieux t'écouter, de te parler avec douceur et de prendre soin de nous, comme un homme qui sait reconnaître ses torts.</p>
+        <p>[Explique ici ce qui s'est passé et ce que tu as compris.]</p>
+        <p>Tu comptes plus que mon orgueil d'homme, plus que n'importe quelle dispute. Je te promets de mieux t'écouter, de te parler avec douceur et de prendre soin de nous, comme un homme qui sait reconnaître ses torts.</p>
         <p>Si tu me laisses une chance, je te prouverai chaque jour que je suis là, à tes côtés, comme dans notre chanson.</p>
-        <p class="sign">Ton homme qui t'aime,<br>Steevenson P.</p>
+        <p class="sign">Ton homme qui t'aime,<br>[Ton prénom]</p>
       </div>
     </article>
     <p class="tip">La lettre est modifiable : touche le texte pour écrire le tien.</p>
@@ -239,33 +239,49 @@ footer{text-align:center;color:var(--muted);padding:2rem 0 1rem;font-style:itali
   vol.addEventListener('input',function(){a.volume=vol.value});
 })();
 
-/* Carousel */
+/* Carousel : médias chargés automatiquement depuis le dossier /media du dépôt */
 (function(){
-  var captions=['Notre premier souvenir','Un jour où on a beaucoup ri','Notre plus belle aventure','Ce que j\'aime chez toi','Notre avenir ensemble'];
-  var track=document.getElementById('track'), dots=document.getElementById('dots'), i=0, n=captions.length;
-  captions.forEach(function(c,k){
+  var MEDIA=[
+    {file:'IMG_4976.JPG',caption:'Notre premier souvenir'},
+    {file:'IMG_4999.HEIC',caption:'Un jour où on a beaucoup ri'},
+    {file:'Screenshot_20260819_021315_Photos.jpg',caption:'Un moment à nous'},
+    {file:'e0b828c5014b4d389a8101521480c0f9.MOV',caption:'Notre plus belle aventure'},
+    {file:'EB6E063D-2107-4EB5-B17F-8B5A821E2F2F.mov',caption:'Ce que j\'aime chez toi'},
+    {file:'39d9b380d22347dcabb594fd567734b3.MOV',caption:'Rien que nous deux'},
+    {file:'7f4c76f15d7f44e2b349e4f7482f1ad6.mov',caption:'Notre avenir ensemble'}
+  ];
+  var DIR='media/';
+  var track=document.getElementById('track'), dots=document.getElementById('dots'), i=0, n=MEDIA.length;
+  var isVideo=function(f){return /\.(mov|mp4|m4v|webm)$/i.test(f)};
+  function fail(ph,m,item){
+    m.remove();
+    var h=document.createElement('div'); h.className='hint';
+    h.innerHTML='<b>♡</b>';
+    var t=document.createElement('span');
+    t.textContent=/\.heic$/i.test(item.file)
+      ? 'Format HEIC non lisible ici : convertis ce fichier en JPG.'
+      : 'Fichier introuvable : '+DIR+item.file;
+    h.appendChild(t); ph.appendChild(h);
+  }
+  MEDIA.forEach(function(item,k){
     var f=document.createElement('figure'); f.className='slide';
     f.setAttribute('role','group'); f.setAttribute('aria-label',(k+1)+' sur '+n);
-    f.innerHTML='<div class="ph"><div class="hint"><b>♡</b>Ajouter une photo ou une vidéo</div><input type="file" accept="image/*,video/*" aria-label="Ajouter une photo ou une vidéo '+(k+1)+'"></div><figcaption contenteditable="true" spellcheck="true"></figcaption>';
-    f.querySelector('figcaption').textContent=c;
-    f.querySelector('input').addEventListener('change',function(e){
-      var file=e.target.files[0]; if(!file) return;
-      var ph=f.querySelector('.ph');
-      var old=ph.querySelector('img,video');
-      if(old){ if(old.src.indexOf('blob:')===0) URL.revokeObjectURL(old.src); old.remove(); }
-      var isVideo=file.type.indexOf('video/')===0, m;
-      if(isVideo){
-        m=document.createElement('video'); m.controls=true; m.playsInline=true; m.preload='metadata';
-        m.setAttribute('aria-label',c); m.src=URL.createObjectURL(file);
-      } else {
-        m=new Image(); m.alt=c;
-        var r=new FileReader(); r.onload=function(){m.src=r.result}; r.readAsDataURL(file);
-      }
-      ph.classList.toggle('video',isVideo);
-      ph.insertBefore(m,ph.querySelector('.hint'));
-    });
-    track.appendChild(f);
-    var d=document.createElement('button'); d.setAttribute('aria-label','Aller à la photo '+(k+1));
+    var ph=document.createElement('div'); ph.className='ph';
+    var url=DIR+encodeURIComponent(item.file), m;
+    if(isVideo(item.file)){
+      m=document.createElement('video');
+      m.controls=true; m.playsInline=true; m.preload='metadata';
+      m.setAttribute('playsinline',''); m.src=url+'#t=0.1';
+    }else{
+      m=new Image(); m.loading='lazy'; m.alt=item.caption; m.src=url;
+    }
+    m.setAttribute('aria-label',item.caption);
+    m.addEventListener('error',function(){fail(ph,m,item)});
+    ph.appendChild(m);
+    var cap=document.createElement('figcaption');
+    cap.contentEditable='true'; cap.spellcheck=true; cap.textContent=item.caption;
+    f.appendChild(ph); f.appendChild(cap); track.appendChild(f);
+    var d=document.createElement('button'); d.setAttribute('aria-label','Aller au souvenir '+(k+1));
     d.addEventListener('click',function(){go(k)}); dots.appendChild(d);
   });
   function go(k){
@@ -289,4 +305,5 @@ footer{text-align:center;color:var(--muted);padding:2rem 0 1rem;font-style:itali
 })();
 </script>
 </body>
-</html>
+  </html>
+  
