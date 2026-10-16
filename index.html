@@ -241,15 +241,9 @@ footer{text-align:center;color:var(--muted);padding:2rem 0 1rem;font-style:itali
 
 /* Carousel : médias chargés automatiquement depuis le dossier /media du dépôt */
 (function(){
-  var MEDIA=[
-    {file:'IMG_4976.JPG',caption:'Notre premier souvenir'},
-    {file:'IMG_4999.HEIC',caption:'Un jour où on a beaucoup ri'},
-    {file:'Screenshot_20260819_021315_Photos.jpg',caption:'Un moment à nous'},
-    {file:'e0b828c5014b4d389a8101521480c0f9.MOV',caption:'Notre plus belle aventure'},
-    {file:'EB6E063D-2107-4EB5-B17F-8B5A821E2F2F.mov',caption:'Ce que j\'aime chez toi'},
-    {file:'39d9b380d22347dcabb594fd567734b3.MOV',caption:'Rien que nous deux'},
-    {file:'7f4c76f15d7f44e2b349e4f7482f1ad6.mov',caption:'Notre avenir ensemble'}
-  ];
+var MEDIA = [ {file: 'Ben_E._King_-_Stand_by_me_(mp3.pm).mp3', caption: 'Notre chanson pour toujours'} ];.
+
+
   var DIR='media/';
   var track=document.getElementById('track'), dots=document.getElementById('dots'), i=0, n=MEDIA.length;
   var isVideo=function(f){return /\.(mov|mp4|m4v|webm)$/i.test(f)};
