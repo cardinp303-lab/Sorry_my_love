@@ -3,15 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Pardonne-moi</title>
+<title>Je t&rsquo;aime Daana D.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  color-scheme: dark;
+  color-scheme:dark;
   --bg:#2a0f1f; --bg2:#3d1630; --ink:#fbe9ec; --muted:#d9aab6;
-  --rose:#ee8aa0; --gold:#f0cf84; --card:rgba(255,235,240,.07); --line:rgba(255,200,215,.25);
-  --paper:#fff4f1; --paper-ink:#4a1b2e;
+  --rose:#ee8aa0; --gold:#f0cf84; --card:rgba(255,235,240,.08); --line:rgba(255,200,215,.25);
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
@@ -19,287 +18,244 @@
   :root:not([data-theme="dark"]){
     color-scheme:light;
     --bg:#fff0f2; --bg2:#ffd9e0; --ink:#4a1b2e; --muted:#8e4a60;
-    --rose:#d64a6b; --gold:#b8860b; --card:rgba(255,255,255,.65); --line:rgba(214,74,107,.3);
+    --rose:#d64a6b; --gold:#a8760a; --card:rgba(255,255,255,.7); --line:rgba(214,74,107,.3);
   }
 }
 :root[data-theme="dark"]{color-scheme:dark}
 *,*::before,*::after{box-sizing:inherit}
-html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
-body{margin:0;background:radial-gradient(120% 80% at 50% 0%,var(--bg2),var(--bg) 60%) fixed;background-color:var(--bg);
-  color:var(--ink);font-family:"Cormorant Garamond",Georgia,serif;font-size:1.2rem;line-height:1.65;overflow-x:hidden}
-#fx{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
-.float{position:absolute;bottom:-60px;will-change:transform,opacity;animation:rise linear forwards}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;background:radial-gradient(120% 80% at 50% 0%,var(--bg2),var(--bg) 62%) fixed;background-color:var(--bg);
+  color:var(--ink);font-family:"Cormorant Garamond",Georgia,serif;font-size:1.2rem;line-height:1.5;overflow-x:hidden}
+body.locked{overflow:hidden}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+/* Fond : \e9 toiles et halos */
+#bg,#fx{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+#bg{z-index:0}#fx{z-index:5}
+.star{position:absolute;border-radius:50%;background:var(--gold);animation:twinkle 3s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.1;transform:scale(.6)}50%{opacity:.9;transform:scale(1.3)}}
+.orb{position:absolute;width:var(--s);height:var(--s);left:var(--x);top:var(--y);border-radius:50%;
+  background:radial-gradient(circle,var(--c),transparent 70%);opacity:.35;filter:blur(30px);animation:drift var(--d) ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(40px,-60px,0) scale(1.2)}}
+
+/* P\e9 tales, c\153 urs, fleurs */
+.float,.petal{position:absolute;will-change:transform,opacity}
+.float{bottom:-60px;animation:rise linear forwards}
 @keyframes rise{
   0%{transform:translate3d(0,0,0) rotate(0);opacity:0}
   10%{opacity:.9}
   50%{transform:translate3d(var(--sway),-55vh,0) rotate(calc(var(--rot)/2))}
-  100%{transform:translate3d(calc(var(--sway)*-1),-115vh,0) rotate(var(--rot));opacity:0}
-}
-main{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:0 1.25rem 4rem}
-section{padding:3.5rem 0}
-h1,h2{font-weight:600;line-height:1.1;margin:0}
-.hero{min-height:88vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding-top:3rem}
-.hero h1{font-family:Caveat,cursive;font-weight:600;font-size:clamp(3.6rem,15vw,7.5rem);color:var(--rose);
-  text-shadow:0 0 40px color-mix(in srgb,var(--rose) 50%,transparent);
-  animation:beat 3.2s ease-in-out infinite}
-@keyframes beat{0%,100%{transform:scale(1)}8%{transform:scale(1.04)}16%{transform:scale(1)}24%{transform:scale(1.03)}32%{transform:scale(1)}}
-.hero p{max-width:30ch;font-style:italic;color:var(--muted);font-size:1.4rem;margin:1.2rem 0 2rem}
-.btn{font:inherit;font-weight:600;border:1px solid var(--rose);background:var(--rose);color:#3b0f20;padding:.7rem 1.6rem;border-radius:999px;cursor:pointer;text-decoration:none;transition:transform .2s,box-shadow .2s}
-.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px color-mix(in srgb,var(--rose) 40%,transparent)}
-.btn.ghost{background:transparent;color:var(--ink)}
-:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
-h2{font-family:Caveat,cursive;font-size:clamp(2.4rem,8vw,3.4rem);color:var(--gold);margin-bottom:1.2rem;text-align:center}
+  100%{transform:translate3d(calc(var(--sway)*-1),-115vh,0) rotate(var(--rot));opacity:0}}
+.petal{top:-40px;width:var(--s);height:calc(var(--s)*1.3);border-radius:150% 0 150% 0;opacity:.85;
+  background:radial-gradient(circle at 30% 30%,#ffc2d0,#e0476b);animation:fall linear forwards}
+@keyframes fall{to{transform:translate3d(var(--sway),112vh,0) rotate(var(--rot))}}
+.bh{position:fixed;z-index:60;pointer-events:none;color:var(--rose);font-size:1.3rem;animation:burst 1.1s ease-out forwards}
+@keyframes burst{
+  from{transform:translate(-50%,-50%) scale(.4);opacity:1}
+  to{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.2);opacity:0}}
 
-/* Gate */
-body.locked{overflow:hidden}
-.gate{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem 1.5rem;background:radial-gradient(100% 70% at 50% 30%,var(--bg2),var(--bg));transition:opacity .8s ease,visibility .8s}
-.gate.out{opacity:0;visibility:hidden}
-.gate .crown{font-size:3rem;margin-bottom:.5rem;animation:beat 3.2s ease-in-out infinite}
-.gate h2{font-size:clamp(2.2rem,9vw,3.6rem);max-width:16ch;margin:0 0 .6rem;color:var(--rose)}
-.gate p{max-width:32ch;margin:0 0 2rem;color:var(--ink);font-size:1.5rem;line-height:1.4}
-.gate p b{font-family:Caveat,cursive;font-weight:600;font-size:1.25em;color:var(--gold)}
-
-/* Photo unique, bagues et fleurs */
-.frame{position:relative;max-width:min(420px,84%);margin:4rem auto 1rem}
-.photo{aspect-ratio:4/5;border-radius:999px 999px 24px 24px;overflow:hidden;border:3px solid var(--gold);
-  box-shadow:0 0 0 8px color-mix(in srgb,var(--rose) 25%,transparent),0 24px 60px rgba(0,0,0,.45);
-  background:linear-gradient(135deg,var(--bg2),color-mix(in srgb,var(--rose) 25%,var(--bg)))}
-.photo img{width:100%;height:100%;object-fit:cover;display:block}
-.photo .hint{height:100%;display:grid;place-items:center;text-align:center;padding:2rem;color:var(--muted);font-size:1.05rem}
-.rings{position:absolute;top:-3rem;left:50%;width:120px;margin-left:-60px;z-index:3;filter:drop-shadow(0 0 10px rgba(240,207,132,.75))}
-.fl{position:absolute;z-index:3;font-size:clamp(2.3rem,10vw,3.6rem);line-height:1;transform-origin:50% 90%;filter:drop-shadow(0 4px 8px rgba(0,0,0,.35))}
-.fl.a{top:8%;left:-9%}.fl.b{top:14%;right:-10%}.fl.c{bottom:16%;left:-11%}.fl.d{bottom:5%;right:-9%}
-.sp{position:absolute;z-index:4;font-size:1.2rem;opacity:0}
-.sp.s1{top:-2.6rem;left:calc(50% - 4.2rem)}.sp.s2{top:-1.2rem;left:calc(50% + 3.4rem)}.sp.s3{top:-3.4rem;left:calc(50% + .6rem)}
-.frame figcaption{text-align:center;font-family:Caveat,cursive;font-size:1.8rem;color:var(--gold);margin-top:1.4rem;outline:none}
-.love .rings{animation:ringfloat 4s ease-in-out infinite}
-@keyframes ringfloat{50%{transform:translateY(-9px) rotate(5deg)}}
-.love .fl{animation:sway 4.5s ease-in-out infinite}
+/* Cadre */
+main{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.25rem;gap:2rem}
+.frame{position:relative;width:min(20rem,100%);padding:2.8rem 1.5rem;text-align:center;background:var(--card);backdrop-filter:blur(8px);
+  border:2px solid var(--gold);border-radius:18px;
+  box-shadow:0 0 0 6px color-mix(in srgb,var(--rose) 18%,transparent),0 20px 50px rgba(0,0,0,.3)}
+.frame::before{content:"";position:absolute;inset:8px;border:1px solid color-mix(in srgb,var(--gold) 55%,transparent);border-radius:12px;pointer-events:none}
+.msg{margin:0;font-family:Caveat,cursive;font-weight:600;font-size:clamp(2.7rem,13vw,3.7rem);line-height:1.05;
+  background:linear-gradient(100deg,var(--rose),var(--gold),var(--rose));background-size:200% auto;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 5s linear infinite}
+.msg span{display:block;font-size:1.2em}
+@keyframes shine{to{background-position:200% center}}
+.beat{margin-top:.6rem;color:var(--rose);font-size:1.6rem}
+.fl{position:absolute;font-size:2rem;line-height:1;transform-origin:50% 90%}
+.fl.a{top:-1.1rem;left:-1rem}.fl.b{top:-1.1rem;right:-1rem}.fl.c{bottom:-1.1rem;left:-1rem}.fl.d{bottom:-1.1rem;right:-1rem}
+.love .frame{animation:glow 3s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 0 12px color-mix(in srgb,var(--rose) 28%,transparent),0 0 60px color-mix(in srgb,var(--rose) 55%,transparent),0 20px 50px rgba(0,0,0,.3)}}
+.love .fl{animation:sway 4s ease-in-out infinite}
 .love .fl.b{animation-delay:-1s}.love .fl.c{animation-delay:-2s}.love .fl.d{animation-delay:-3s}
-@keyframes sway{0%,100%{transform:rotate(-9deg) scale(1)}50%{transform:rotate(9deg) scale(1.12)}}
-.love .sp{animation:twinkle 2.4s ease-in-out infinite}
-.love .sp.s2{animation-delay:-.8s}.love .sp.s3{animation-delay:-1.6s}
-@keyframes twinkle{0%,100%{opacity:0;transform:scale(.4)}50%{opacity:1;transform:scale(1.3)}}
-.love .photo{animation:halo 3.2s ease-in-out infinite}
-@keyframes halo{50%{box-shadow:0 0 0 14px color-mix(in srgb,var(--rose) 35%,transparent),0 0 60px color-mix(in srgb,var(--rose) 55%,transparent),0 24px 60px rgba(0,0,0,.45)}}
-@media (prefers-reduced-motion:reduce){.love .rings,.love .fl,.love .sp,.love .photo{animation:none}.sp{opacity:1}}
+@keyframes sway{0%,100%{transform:rotate(-10deg) scale(1)}50%{transform:rotate(10deg) scale(1.15)}}
+.love .beat{animation:beat 1.4s ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.35)}30%{transform:scale(1)}45%{transform:scale(1.25)}}
+.btn{font:inherit;font-weight:600;border:1px solid var(--rose);background:var(--rose);color:#3b0f20;padding:.7rem 1.8rem;border-radius:999px;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 24px color-mix(in srgb,var(--rose) 40%,transparent)}
+.btn:disabled{opacity:.75;cursor:default}
 
-/* Player */
-.player{display:grid;grid-template-columns:auto 1fr;gap:.9rem 1.1rem;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:1.1rem 1.25rem;backdrop-filter:blur(8px)}
-.play{width:56px;height:56px;border-radius:50%;border:0;background:var(--rose);color:#3b0f20;font-size:1.3rem;cursor:pointer;display:grid;place-items:center;transition:transform .2s}
-.play:hover{transform:scale(1.08)}
-.meta strong{display:block;font-size:1.25rem;line-height:1.2}
-.meta span{color:var(--muted);font-size:1rem}
-.bar{grid-column:1/-1;display:flex;align-items:center;gap:.7rem;font-size:.95rem;color:var(--muted)}
-input[type=range]{flex:1;accent-color:var(--rose);min-width:0}
-.load{grid-column:1/-1;font-size:1rem;color:var(--muted)}
-.load label{color:var(--gold);text-decoration:underline;cursor:pointer}
-.load input{position:absolute;opacity:0;width:1px;height:1px}
-.load input:focus-visible+label{outline:3px solid var(--gold);outline-offset:3px}
-.eq{display:inline-flex;gap:3px;align-items:flex-end;height:16px;margin-left:.5rem;vertical-align:middle}
-.eq i{width:3px;background:var(--rose);height:4px;border-radius:2px}
-.playing .eq i{animation:eq .8s ease-in-out infinite}
-.playing .eq i:nth-child(2){animation-delay:.15s}.playing .eq i:nth-child(3){animation-delay:.3s}
-@keyframes eq{50%{height:16px}}
-
-/* Carousel */
-.carousel{position:relative}
-.viewport{overflow:hidden;border-radius:22px;border:1px solid var(--line);touch-action:pan-y}
-.track{display:flex;transition:transform .6s cubic-bezier(.65,0,.25,1)}
-.slide{flex:0 0 100%;margin:0}
-.ph{cursor:default;position:relative;aspect-ratio:4/3;display:grid;place-items:center;text-align:center;background:linear-gradient(135deg,var(--bg2),color-mix(in srgb,var(--rose) 25%,var(--bg)));cursor:pointer;overflow:hidden}
-.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.ph .hint{padding:1rem;color:var(--muted)}
-.ph .hint b{display:block;font-size:2.6rem;color:var(--rose);font-weight:400}
-.ph input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.ph video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;z-index:1}
-.ph.video input{inset:auto;top:.5rem;right:.5rem;width:44px;height:44px;border-radius:50%;z-index:3}
-.ph.video::after{content:"↻";position:absolute;top:.5rem;right:.5rem;width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:rgba(42,15,31,.7);color:#fff;z-index:2;pointer-events:none}
-.slide figcaption{padding:.8rem 1rem;text-align:center;font-style:italic;color:var(--muted);background:var(--card)}
-.nav{position:absolute;top:calc(50% - 1.5rem);width:46px;height:46px;border-radius:50%;border:0;background:rgba(42,15,31,.65);color:#fff;font-size:1.4rem;cursor:pointer;z-index:2}
-.nav.prev{left:.6rem}.nav.next{right:.6rem}
-.dots{display:flex;justify-content:center;gap:.6rem;margin-top:1rem}
-.dots button{width:11px;height:11px;border-radius:50%;border:1px solid var(--rose);background:transparent;padding:0;cursor:pointer;transition:background .3s,transform .3s}
-.dots button[aria-current=true]{background:var(--rose);transform:scale(1.3)}
-
-/* Letter */
-.letter{background:var(--paper);color:var(--paper-ink);border-radius:6px 22px 6px 22px;padding:clamp(1.5rem,6vw,3rem);box-shadow:0 20px 60px rgba(0,0,0,.35);position:relative;
+/* \c9 cran d\2019 avertissement */
+.lettre{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:1rem 1.25rem 4rem}
+.lettre h2{font-family:Caveat,cursive;font-weight:600;font-size:clamp(2.4rem,8vw,3.4rem);color:var(--gold);text-align:center;margin:0 0 1.2rem}
+.paper{background:#fff4f1;color:#4a1b2e;border-radius:6px 22px 6px 22px;padding:clamp(1.5rem,6vw,3rem);box-shadow:0 20px 60px rgba(0,0,0,.35);
   background-image:repeating-linear-gradient(transparent 0 2.07rem,rgba(214,74,107,.18) 2.07rem 2.12rem)}
-.letter .body{font-family:Caveat,cursive;font-size:clamp(1.45rem,4.6vw,1.9rem);line-height:2.1rem;outline:none}
-.letter p{margin:0 0 2.1rem}
-.sign{text-align:right;margin:0}
+.paper .body{font-family:Caveat,cursive;font-size:clamp(1.45rem,4.6vw,1.9rem);line-height:2.1rem;outline:none}
+.paper p{margin:0 0 2.1rem}
+.paper .sign{text-align:right;margin:0}
 .tip{text-align:center;color:var(--muted);font-size:1rem;margin-top:1rem}
-footer{text-align:center;color:var(--muted);padding:2rem 0 1rem;font-style:italic}
-@media (max-width:480px){.player{grid-template-columns:1fr;justify-items:center;text-align:center}.nav{width:40px;height:40px}}
+.question{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:1rem 1.25rem 5rem;text-align:center}
+.question h2{font-family:Caveat,cursive;font-weight:600;font-size:clamp(2.4rem,9vw,3.6rem);line-height:1.1;color:var(--rose);margin:0 0 1.5rem}
+.arena{position:relative;width:min(100%,26rem);height:14rem;margin:0 auto;display:flex;gap:1.2rem;justify-content:center;align-items:flex-start}
+.oui{font-size:1.3rem;padding:.8rem 2.2rem}
+.non{background:transparent;color:var(--ink);border-color:var(--line);font-size:1.3rem;padding:.8rem 2.2rem}
+.non.run{position:absolute;transition:left .45s cubic-bezier(.3,1.4,.5,1),top .45s cubic-bezier(.3,1.4,.5,1)}
+.gate{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem 1.5rem;
+  background:radial-gradient(100% 70% at 50% 30%,var(--bg2),var(--bg));transition:opacity .8s ease,visibility .8s}
+.gate.out{opacity:0;visibility:hidden}
+.gate .crown{font-size:3rem;margin-bottom:.5rem}
+.gate h2{font-family:Caveat,cursive;font-weight:600;font-size:clamp(2.4rem,10vw,3.6rem);margin:0 0 .6rem;color:var(--rose)}
+.gate p{max-width:32ch;margin:0 0 2rem;font-size:1.5rem;line-height:1.4}
+.gate p b{font-family:Caveat,cursive;font-size:1.25em;color:var(--gold)}
+
 @media (prefers-reduced-motion:reduce){
-  .hero h1,.playing .eq i{animation:none}.track{transition:none}html{scroll-behavior:auto}#fx{display:none}
+  .star,.orb,.msg,.love .frame,.love .fl,.love .beat{animation:none}
+  .non.run{transition:none}
+  #fx{display:none}
 }
 </style>
 </head>
 <body class="locked">
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
-  <div class="crown" aria-hidden="true">👑</div>
+  <div class="crown" aria-hidden="true">&#x1F451;</div>
   <h2 id="gate-title">Attention</h2>
-  <p>J'ai créé ce site spécialement pour ma petite princesse <b>Daana D.</b></p>
-  <button class="btn" id="enter">Découvrir</button>
+  <p>J&rsquo;ai cr&eacute;&eacute; ce site sp&eacute;cialement pour ma petite princesse <b>Daana D.</b></p>
+  <button class="btn" id="enter">D&eacute;couvrir</button>
+</div>
+
+<div id="bg" aria-hidden="true">
+  <div class="orb" style="--s:280px;--x:-6%;--y:8%;--c:var(--rose);--d:9s"></div>
+  <div class="orb" style="--s:220px;--x:70%;--y:55%;--c:var(--gold);--d:11s"></div>
+  <div class="orb" style="--s:320px;--x:30%;--y:75%;--c:var(--rose);--d:13s"></div>
+  <div id="stars"></div>
 </div>
 <div id="fx" aria-hidden="true"></div>
+
 <main>
-  <header class="hero">
-    <h1>Pardonne-moi</h1>
-    <p>Quelques mots, une chanson et nos souvenirs, pour te dire que je suis désolé.</p>
-    <a class="btn" href="#musique">Commencer</a>
-  </header>
+  <div class="frame">
+    <span class="fl a" aria-hidden="true">&#x1F339;</span><span class="fl b" aria-hidden="true">&#x1F338;</span>
+    <span class="fl c" aria-hidden="true">&#x1F337;</span><span class="fl d" aria-hidden="true">&#x1F33A;</span>
+    <h1 class="msg">Je t&rsquo;aime <span>Daana D.</span></h1>
+    <div class="beat" aria-hidden="true">&hearts;</div>
+  </div>
+  <button class="btn" id="start">Commencer</button>
+</main>
 
-  <section id="musique">
-    <h2>Notre chanson</h2>
-    <div class="player" id="player">
-      <button class="play" id="play" aria-label="Lecture">▶</button>
-      <div class="meta"><strong>Stand By Me<span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></strong><span>Ben E. King</span></div>
-      <div class="bar">
-        <span id="cur">0:00</span>
-        <input type="range" id="seek" min="0" max="100" value="0" step="0.1" aria-label="Position dans la chanson">
-        <span id="dur">0:00</span>
-      </div>
-      <div class="bar">
-        <span aria-hidden="true">🔈</span>
-        <input type="range" id="vol" min="0" max="1" step="0.05" value="0.7" aria-label="Volume">
-      </div>
-      <div class="load">
-        <input type="file" id="file" accept="audio/*">
-        Si la chanson ne démarre pas : <label for="file">choisis ton MP3 de « Stand By Me »</label>.<span id="songnote"></span>
-      </div>
-      <audio id="audio" preload="metadata" loop></audio>
-    </div>
-  </section>
-
-  <section>
-    <h2>Nous deux</h2>
-    <figure class="frame" id="frame">
-      <svg class="rings" viewBox="0 0 120 90" aria-hidden="true" fill="none" stroke="#f0cf84" stroke-width="6">
-        <circle cx="42" cy="54" r="28"/><circle cx="78" cy="54" r="28"/>
-        <polygon points="78,6 87,15 78,24 69,15" fill="#d9f2ff" stroke-width="3"/>
-      </svg>
-      <span class="sp s1" aria-hidden="true">✨</span><span class="sp s2" aria-hidden="true">✨</span><span class="sp s3" aria-hidden="true">💫</span>
-      <span class="fl a" aria-hidden="true">🌹</span><span class="fl b" aria-hidden="true">🌸</span>
-      <span class="fl c" aria-hidden="true">🌷</span><span class="fl d" aria-hidden="true">🌺</span>
-      <div class="photo"><img id="photo" alt="Notre plus beau souvenir"></div>
-      <figcaption contenteditable="true" spellcheck="true">Toi et moi, pour toujours</figcaption>
-    </figure>
-  </section>
-
-  <section>
-    <h2>Ma lettre pour toi</h2>
-    <section class="lettre">
+<section class="lettre">
   <h2>Ma lettre pour toi</h2>
   <article class="paper">
     <div class="body" contenteditable="true" spellcheck="true" aria-label="Lettre d&rsquo;excuses (modifiable)">
       <p>Ma petite princesse Daana,</p>
       <p>Je ne sais pas par o&ugrave; commencer, alors je commence par l&rsquo;essentiel : je suis d&eacute;sol&eacute;. Je n&rsquo;aurais jamais d&ucirc; te faire de la peine, et je mesure &agrave; quel point je t&rsquo;ai bless&eacute;e.</p>
-      <p>[tu es mon monde et je t'aime vraiment.]</p>
+      <p>j'ai des défauts et je vais les corriger pour etre le meilleur chaque jour.</p>
       <p>Depuis, je repense &agrave; tout : &agrave; mes mots, &agrave; mon attitude, au moment o&ugrave; j&rsquo;aurais d&ucirc; t&rsquo;&eacute;couter et o&ugrave; j&rsquo;ai pr&eacute;f&eacute;r&eacute; me d&eacute;fendre. J&rsquo;ai compris que ce n&rsquo;est pas seulement l&rsquo;erreur qui fait mal, c&rsquo;est la fa&ccedil;on dont je t&rsquo;ai fait sentir que tu n&rsquo;&eacute;tais pas ma priorit&eacute;. Tu l&rsquo;es, Daana. Tu l&rsquo;as toujours &eacute;t&eacute;.</p>
       <p>Tu comptes plus que mon orgueil d&rsquo;homme, plus que n&rsquo;importe quelle dispute, plus que le besoin d&rsquo;avoir raison. Un homme digne de ce nom sait reconna&icirc;tre ses torts, et c&rsquo;est ce que je fais aujourd&rsquo;hui, sans excuse et sans d&eacute;tour.</p>
       <p>Tu m&rsquo;as rendu meilleur. Ta douceur, ton rire, ta fa&ccedil;on de croire en moi m&ecirc;me quand je doute : tout cela m&rsquo;a donn&eacute; envie d&rsquo;&ecirc;tre quelqu&rsquo;un dont tu peux &ecirc;tre fi&egrave;re. Je ne veux pas perdre &ccedil;a &agrave; cause d&rsquo;un moment de b&ecirc;tise.</p>
       <p>Je te promets de mieux t&rsquo;&eacute;couter, de te parler avec douceur, de prendre le temps de comprendre avant de r&eacute;pondre, et de te dire plus souvent ce que tu repr&eacute;sentes pour moi. Je te promets d&rsquo;&ecirc;tre l&agrave; dans les jours faciles comme dans les jours difficiles, pas seulement quand tout va bien.</p>
       <p>Je n&rsquo;attends pas que tu oublies d&rsquo;un coup. Prends le temps qu&rsquo;il te faut, je suis patient. Si tu me laisses une chance, je te prouverai chaque jour, par mes actes et pas seulement par mes mots, que je suis l&agrave;, &agrave; tes c&ocirc;t&eacute;s.</p>
       <p>Pardon, mon amour. Je t&rsquo;aime, aujourd&rsquo;hui et pour toujours.</p>
-      <p class="sign">Ton homme qui t&rsquo;aime,<br>Steevenson P.]</p>
+      <p class="sign">Ton homme qui t&rsquo;aime,<br>[Steevenson P.]</p>
     </div>
   </article>
   <p class="tip">La lettre est modifiable : touche le texte pour &eacute;crire le tien.</p>
-    </section>
-  <footer>Reste avec moi. 🌹</footer>
-</main>
+</section>
+
+<section class="question" id="question">
+  <h2 id="qtitle">Est-ce que tu peux me pardonner&nbsp;?</h2>
+  <div class="arena" id="arena">
+    <button class="btn oui" id="oui">OUI &hearts;</button>
+    <button class="btn non" id="non">NON</button>
+  </div>
+  <p class="tip" id="answer" aria-live="polite"></p>
+</section>
 
 <script>
-/* Warning gate */
 (function(){
-  var g=document.getElementById('gate'), b=document.getElementById('enter');
-  b.focus();
-  b.addEventListener('click',function(){
-    g.classList.add('out'); document.body.classList.remove('locked');
-    setTimeout(function(){g.style.display='none'},900);
-    window.scrollTo(0,0);
-  });
-})();
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fx=document.getElementById('fx'), rnd=Math.random, started=false;
 
-/* Floating hearts and flowers */
-(function(){
-  var fx=document.getElementById('fx');
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var icons=['❤','💗','💖','🌸','🌷','🌹','🌺','💕','💍','💍'];
-  function spawn(){
-    if(document.hidden) return;
-    var el=document.createElement('span');
-    el.className='float';
-    el.textContent=icons[Math.floor(Math.random()*icons.length)];
-    var size=14+Math.random()*26, dur=9+Math.random()*9;
-    el.style.left=Math.random()*100+'%';
-    el.style.fontSize=size+'px';
-    el.style.setProperty('--sway',(Math.random()*80-40)+'px');
-    el.style.setProperty('--rot',(Math.random()*360-180)+'deg');
-    el.style.animationDuration=dur+'s';
-    el.style.filter='blur('+(size<18?1:0)+'px)';
-    fx.appendChild(el);
-    setTimeout(function(){el.remove()},dur*1000);
+  /* \u00c9cran d\u2019avertissement */
+  var gate=document.getElementById('gate'), enter=document.getElementById('enter');
+  enter.focus();
+  enter.addEventListener('click',function(){
+    gate.classList.add('out'); document.body.classList.remove('locked');
+    setTimeout(function(){gate.style.display='none'},900);
+  });
+
+  /* \u00c9toiles */
+  if(!reduce){
+    var st=document.getElementById('stars');
+    for(var i=0;i<40;i++){
+      var s=document.createElement('span'), z=2+rnd()*3;
+      s.className='star';
+      s.style.cssText='left:'+rnd()*100+'%;top:'+rnd()*100+'%;width:'+z+'px;height:'+z+'px;animation-delay:'+(-rnd()*3)+'s;animation-duration:'+(2+rnd()*3)+'s';
+      st.appendChild(s);
+    }
   }
-  var started=false;
-  window.startLove=function(){
+
+  var icons=['\u2764','\ud83d\udc97','\ud83d\udc96','\ud83d\udc95','\ud83c\udf38','\ud83c\udf37','\ud83c\udf39','\ud83c\udf3a','\ud83d\udc8d'];
+  function add(el,ms){fx.appendChild(el);setTimeout(function(){el.remove()},ms)}
+  function rise(){
+    if(document.hidden) return;
+    var el=document.createElement('span'), size=14+rnd()*26, dur=9+rnd()*9;
+    el.className='float'; el.textContent=icons[Math.floor(rnd()*icons.length)];
+    el.style.cssText='left:'+rnd()*100+'%;font-size:'+size+'px;animation-duration:'+dur+'s;--sway:'+(rnd()*80-40)+'px;--rot:'+(rnd()*360-180)+'deg';
+    add(el,dur*1000);
+  }
+  function petal(){
+    if(document.hidden) return;
+    var el=document.createElement('span'), dur=7+rnd()*6;
+    el.className='petal';
+    el.style.cssText='left:'+rnd()*100+'%;--s:'+(10+rnd()*12)+'px;animation-duration:'+dur+'s;--sway:'+(rnd()*160-80)+'px;--rot:'+(rnd()*720-360)+'deg';
+    add(el,dur*1000);
+  }
+  function burst(x,y){
+    for(var i=0;i<9;i++){
+      var h=document.createElement('span'), a=rnd()*Math.PI*2, d=60+rnd()*70;
+      h.className='bh'; h.textContent=['\u2665','\u2740','\u273f'][i%3];
+      h.style.cssText='left:'+x+'px;top:'+y+'px;--dx:'+Math.cos(a)*d+'px;--dy:'+Math.sin(a)*d+'px';
+      document.body.appendChild(h); setTimeout(function(n){n.remove()},1200,h);
+    }
+  }
+
+  var btn=document.getElementById('start');
+  btn.addEventListener('click',function(){
     if(started) return; started=true;
-    for(var i=0;i<26;i++) setTimeout(spawn,i*90);
-    setInterval(spawn,450);
-  };
-})();
-
-/* Audio player */
-(function(){
-  var a=document.getElementById('audio'), play=document.getElementById('play'),
-      seek=document.getElementById('seek'), vol=document.getElementById('vol'),
-      cur=document.getElementById('cur'), dur=document.getElementById('dur'),
-      file=document.getElementById('file'), box=document.getElementById('player');
-  var fmt=function(s){if(!isFinite(s))return '0:00';var m=Math.floor(s/60),r=Math.floor(s%60);return m+':'+(r<10?'0':'')+r};
-  a.volume=.7;
-  var note=document.getElementById('songnote');
-  a.addEventListener('error',function(){
-    if(!a.getAttribute('src')) return;
-    a.removeAttribute('src'); a.load();
-    if(note) note.textContent=' (media/stand-by-me.mp3 est introuvable)';
-  });
-  a.src='media/stand-by-me.mp3';
-  window.startSong=function(){ if(a.getAttribute('src')) a.play().catch(function(){}); };
-  file.addEventListener('change',function(){
-    var f=file.files[0]; if(!f) return;
-    a.src=URL.createObjectURL(f); a.load(); a.play().catch(function(){});
-  });
-  play.addEventListener('click',function(){
-    if(!a.src){file.click();return}
-    a.paused?a.play().catch(function(){}):a.pause();
-  });
-  a.addEventListener('play',function(){play.textContent='❚❚';play.setAttribute('aria-label','Pause');box.classList.add('playing')});
-  a.addEventListener('pause',function(){play.textContent='▶';play.setAttribute('aria-label','Lecture');box.classList.remove('playing')});
-  a.addEventListener('loadedmetadata',function(){dur.textContent=fmt(a.duration)});
-  a.addEventListener('timeupdate',function(){
-    cur.textContent=fmt(a.currentTime);
-    if(a.duration) seek.value=a.currentTime/a.duration*100;
-  });
-  seek.addEventListener('input',function(){if(a.duration)a.currentTime=seek.value/100*a.duration});
-  vol.addEventListener('input',function(){a.volume=vol.value});
-})();
-
-/* Photo unique + bouton Commencer */
-(function(){
-  var PHOTO='media/IMG_4976.JPG';
-  var img=document.getElementById('photo');
-  img.addEventListener('error',function(){
-    var h=document.createElement('div'); h.className='hint';
-    h.textContent='Photo introuvable : '+PHOTO+'. Ajoute-la dans le dossier media/ ou change PHOTO dans le code.';
-    img.replaceWith(h);
-  });
-  img.src=PHOTO;
-  document.querySelector('.hero .btn').addEventListener('click',function(){
     document.body.classList.add('love');
-    if(window.startSong) window.startSong();
-    if(window.startLove) window.startLove();
+    btn.disabled=true; btn.textContent='Avec tout mon amour';
+    if(reduce) return;
+    var r=btn.getBoundingClientRect(); burst(r.left+r.width/2,r.top);
+    for(var i=0;i<26;i++){setTimeout(rise,i*90);setTimeout(petal,i*110)}
+    setInterval(rise,550); setInterval(petal,380);
+  });
+  document.addEventListener('pointerdown',function(e){
+    if(started && !reduce && e.target!==btn) burst(e.clientX,e.clientY);
+  });
+
+  /* Question : le NON glisse ailleurs a chaque appui */
+  var oui=document.getElementById('oui'), non=document.getElementById('non'),
+      arena=document.getElementById('arena'), ans=document.getElementById('answer'),
+      qt=document.getElementById('qtitle'), tries=0,
+      taunts=['Oups, le NON a gliss\u00e9 !','Il est t\u00eatu, ce bouton...','Essaie plut\u00f4t OUI \u2764','Le NON ne veut pas \u00eatre press\u00e9 !'];
+  function dodge(){
+    if(!non.classList.contains('run')){
+      non.style.left=non.offsetLeft+'px'; non.style.top=non.offsetTop+'px';
+      non.classList.add('run'); void non.offsetWidth;
+    }
+    var maxL=Math.max(0,arena.clientWidth-non.offsetWidth), maxT=Math.max(0,arena.clientHeight-non.offsetHeight),
+        cl=parseFloat(non.style.left), ct=parseFloat(non.style.top), nl, nt, n=0, ok;
+    do{
+      nl=rnd()*maxL; nt=rnd()*maxT; n++;
+      ok=Math.abs(nl-cl)>70 || Math.abs(nt-ct)>50;
+      ok=ok && (nl+non.offsetWidth<oui.offsetLeft-8 || nl>oui.offsetLeft+oui.offsetWidth+8 || nt+non.offsetHeight<oui.offsetTop-8 || nt>oui.offsetTop+oui.offsetHeight+8);
+    }while(!ok && n<30);
+    non.style.left=nl+'px'; non.style.top=nt+'px';
+    ans.textContent=taunts[tries++%taunts.length];
+  }
+  non.addEventListener('pointerdown',function(e){e.preventDefault();dodge()});
+  non.addEventListener('pointerenter',function(e){if(e.pointerType==='mouse') dodge()});
+  non.addEventListener('click',function(e){e.preventDefault(); if(e.detail===0) dodge()});
+  oui.addEventListener('click',function(){
+    if(!started) btn.click();
+    non.style.display='none'; oui.disabled=true;
+    qt.textContent='Merci, mon amour !';
+    ans.textContent='Je t\u2019aime Daana D. \u2764';
+    var r=oui.getBoundingClientRect();
+    if(!reduce) for(var i=0;i<4;i++) setTimeout(burst,i*220,r.left+r.width/2,r.top+r.height/2);
   });
 })();
 </script>
